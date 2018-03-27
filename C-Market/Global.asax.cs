@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -15,11 +16,16 @@ namespace C_Market
     {
         protected void Application_Start()
         {
+            // Cada vez que incie la aplicacion verificar si tiene que modificar la base de datos
+            Database.SetInitializer(
+                new MigrateDatabaseToLatestVersion<Models.C_MarketContext,
+                    Migrations.Configuration>());
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);         
         }
     }
 }
