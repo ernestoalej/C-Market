@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -11,124 +10,109 @@ using C_Market.Models;
 
 namespace C_Market.Controllers
 {
-    public class DocumentTypesController : Controller
+    public class SuppliersController : Controller
     {
         private C_MarketContext db = new C_MarketContext();
 
-        // GET: DocumentTypes
+        // GET: Suppliers
         public ActionResult Index()
         {
-            return View(db.DocumentTypes.ToList());
+            return View(db.Suppliers.ToList());
         }
 
-        // GET: DocumentTypes/Details/5
+        // GET: Suppliers/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DocumentType documentType = db.DocumentTypes.Find(id);
-            if (documentType == null)
+            Supplier supplier = db.Suppliers.Find(id);
+            if (supplier == null)
             {
                 return HttpNotFound();
             }
-            return View(documentType);
+            return View(supplier);
         }
 
-        // GET: DocumentTypes/Create
+        // GET: Suppliers/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: DocumentTypes/Create
+        // POST: Suppliers/Create
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DocumentTypeID,Description")] DocumentType documentType)
+        public ActionResult Create([Bind(Include = "SupplierID,Name,Contact,ContactLastName,Phone,Address,Email")] Supplier supplier)
         {
             if (ModelState.IsValid)
             {
-                db.DocumentTypes.Add(documentType);
+                db.Suppliers.Add(supplier);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(documentType);
+            return View(supplier);
         }
 
-        // GET: DocumentTypes/Edit/5
+        // GET: Suppliers/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DocumentType documentType = db.DocumentTypes.Find(id);
-            if (documentType == null)
+            Supplier supplier = db.Suppliers.Find(id);
+            if (supplier == null)
             {
                 return HttpNotFound();
             }
-            return View(documentType);
+            return View(supplier);
         }
 
-        // POST: DocumentTypes/Edit/5
+        // POST: Suppliers/Edit/5
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DocumentTypeID,Description")] DocumentType documentType)
+        public ActionResult Edit([Bind(Include = "SupplierID,Name,Contact,ContactLastName,Phone,Address,Email")] Supplier supplier)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(documentType).State = EntityState.Modified;
+                db.Entry(supplier).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(documentType);
+            return View(supplier);
         }
 
-        // GET: DocumentTypes/Delete/5
+        // GET: Suppliers/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DocumentType documentType = db.DocumentTypes.Find(id);
-            if (documentType == null)
+            Supplier supplier = db.Suppliers.Find(id);
+            if (supplier == null)
             {
                 return HttpNotFound();
             }
-            return View(documentType);
+            return View(supplier);
         }
 
-        // POST: DocumentTypes/Delete/5
+        // POST: Suppliers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
-        {                     
-            DocumentType documentType = db.DocumentTypes.Find(id);
-            db.DocumentTypes.Remove(documentType);
-
-            try
-            {
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            catch (Exception ex)
-            {
-                if (ex  is DbUpdateException)
-                {
-                    Response.Write("No se ha podido eliminar el documento, compruebe que no existan empleados usando este tipo.");                   
-                }
-
-                return View();
-            }
-         
-                        
+        {
+            Supplier supplier = db.Suppliers.Find(id);
+            db.Suppliers.Remove(supplier);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
