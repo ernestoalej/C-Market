@@ -10,11 +10,33 @@ namespace C_Market.Models
     {
         [Key]
         public int SupplierID { get; set; }
+
+        [StringLength(30, ErrorMessage = "The field {0} must contain between {2} and {1} characteres", MinimumLength = 3)]
+        [Required(ErrorMessage = "You must enter the field {0}")]
+        [Display(Name = "Supplier Name")]
         public string Name { get; set; }
-        public string Contact { get; set; }
+
+        [StringLength(30, ErrorMessage = "The field {0} must contain between {2} and {1} characteres", MinimumLength = 3)]
+        [Required(ErrorMessage = "You must enter the field {0}")]
+        [Display(Name = "Contact First Name")]
+        public string ContactFirstName { get; set; }
+
+
+        [StringLength(30, ErrorMessage = "The field {0} must contain between {2} and {1} characteres", MinimumLength = 3)]
+        [Required(ErrorMessage = "You must enter the field {0}")]
+        [Display(Name = "Contact Last Name")]
         public string ContactLastName { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        [StringLength(30, ErrorMessage = "The field {0} must contain between {2} and {1} characteres", MinimumLength = 3)]
+        [Required(ErrorMessage = "You must enter the field {0}")]
         public string Phone { get; set; }
+
+        [StringLength(30, ErrorMessage = "The field {0} must contain between {2} and {1} characteres", MinimumLength = 3)]
+        [Required(ErrorMessage = "You must enter the field {0}")]
         public string Address { get; set; }
+
+        [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
         public virtual ICollection <SupplierProduct> SupplierProducts{ get; set; }

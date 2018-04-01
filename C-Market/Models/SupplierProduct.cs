@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -7,6 +8,7 @@ namespace C_Market.Models
 {
     public class SupplierProduct
     {
+        [Key]
         public int SupplierProductID { get; set; }
         public int SupplierID { get; set; }
         public int ProductoID { get; set; }

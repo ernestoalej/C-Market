@@ -26,6 +26,7 @@ namespace C_Market.Models
 
         [Required(ErrorMessage = "You must enter {0}")]
         [DisplayFormat(DataFormatString ="{0:C2}", ApplyFormatInEditMode = false)]
+        [DataType(DataType.Currency)]
         public Decimal Salaray { get; set; }
 
         

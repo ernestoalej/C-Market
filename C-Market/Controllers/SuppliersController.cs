@@ -36,6 +36,7 @@ namespace C_Market.Controllers
         }
 
         // GET: Suppliers/Create
+
         public ActionResult Create()
         {
             return View();
@@ -46,7 +47,7 @@ namespace C_Market.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "SupplierID,Name,Contact,ContactLastName,Phone,Address,Email")] Supplier supplier)
+        public ActionResult Create([Bind( Include = "SupplierID,Name,ContactFirstName,ContactLastName,Phone,Address,Email")] Supplier supplier)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +79,7 @@ namespace C_Market.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SupplierID,Name,Contact,ContactLastName,Phone,Address,Email")] Supplier supplier)
+        public ActionResult Edit([Bind(Include = "SupplierID,Name,ContactFirstName,ContactLastName,Phone,Address,Email")] Supplier supplier)
         {
             if (ModelState.IsValid)
             {
