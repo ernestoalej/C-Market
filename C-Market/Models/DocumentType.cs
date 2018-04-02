@@ -17,6 +17,8 @@ namespace C_Market.Models
         public string Description { get; set; }
 
         public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
+
 
     }
 }
