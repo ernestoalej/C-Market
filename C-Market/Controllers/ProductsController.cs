@@ -46,7 +46,7 @@ namespace C_Market.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductoID,Description,Price,LastBuy,Stock,Remarks")] Product product)
+        public ActionResult Create([Bind(Include = "ProductID,Description,Price,LastBuy,Stock,Remarks")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace C_Market.Controllers
         // más información vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductoID,Description,Price,LastBuy,Stock,Remarks")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductID,Description,Price,LastBuy,Stock,Remarks")] Product product)
         {
             if (ModelState.IsValid)
             {

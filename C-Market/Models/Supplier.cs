@@ -21,7 +21,6 @@ namespace C_Market.Models
         [Display(Name = "Contact First Name")]
         public string ContactFirstName { get; set; }
 
-
         [StringLength(30, ErrorMessage = "The field {0} must contain between {2} and {1} characteres", MinimumLength = 3)]
         [Required(ErrorMessage = "You must enter the field {0}")]
         [Display(Name = "Contact Last Name")]

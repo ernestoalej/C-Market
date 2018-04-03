@@ -7,17 +7,22 @@ namespace C_Market.Models
     public class Product
     {
         [Key]
-        public int ProductoID { get; set; }
+        public int ProductID { get; set; }
 
-        [Required]
-        [StringLength(80)]
+        [StringLength(80, ErrorMessage = "The field {0} must contain between {2} and {1} characteres", MinimumLength = 3)]
+        [Required(ErrorMessage = "You must enter the field {0}")]
+        [Display(Name ="Product Description")]
         public string Description { get; set; }
 
         [DataType(DataType.Currency)]
+        [DisplayFormat(DataFormatString ="{0:C2}", ApplyFormatInEditMode = false)]
+        [Required(ErrorMessage = "You must enter the field {0}")]
         public decimal Price { get; set; }
 
-        [DisplayFormat(DataFormatString ="{0:C2}", ApplyFormatInEditMode = false)]
-        [Display(Name ="Last buy")]
+        
+        [Display(Name ="Last buy")]        
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime LastBuy { get; set; }
 
         [DataType(DataType.Currency)]
@@ -29,6 +34,7 @@ namespace C_Market.Models
         public string Remarks { get; set; }
 
         public virtual ICollection<SupplierProduct> SupplierProducts { get; set; }
+        public virtual ICollection <OrderDetail> OrderDetails { get; set; }
 
     }
 
