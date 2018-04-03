@@ -64,10 +64,42 @@ namespace C_Market.Controllers
                 list = list.OrderBy(p => p.Description).ToList();
                 ViewBag.ProductID = new SelectList(list, "ProductID", "Description");
 
+                ViewBag.Error = "You must select a product";
+
                 return View(productOrder);
             }
 
-            return View(productOrder);
+            var product = db.Products.Find(productID);
+
+            if (product == null)
+            {
+
+                var list = db.Products.ToList();
+                list.Add(new ProductOrder { ProductID = 0, Description = "[You must select a product]" });
+                list = list.OrderBy(p => p.Description).ToList();
+                ViewBag.ProductID = new SelectList(list, "ProductID", "Description");
+
+                ViewBag.Error = "Product not found";
+
+            }
+
+            productOrder = new ProductOrder()
+            {
+                Description = product.Description,
+                Price = product.Price,
+                ProductID = product.ProductID,
+                Quantity = float.Parse(Request["Quantity"])
+            };
+
+            orderView.Products.Add(productOrder);
+
+            var listC = db.Customers.ToList();
+
+            listC.Add(new Customer { CustomerID = 0, FirstName = "[You must select a customer]" });
+            listC = listC.OrderBy(c => c.FullName).ToList();
+            ViewBag.CustomerID = new SelectList(listC, "CustomerID", "FullName");
+
+            return View("NewOrder", orderView);
         }
 
         protected override void Dispose(bool disposing)
