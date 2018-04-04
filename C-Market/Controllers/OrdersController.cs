@@ -83,16 +83,24 @@ namespace C_Market.Controllers
 
             }
 
-            productOrder = new ProductOrder()
+            productOrder = orderView.Products.Find( p=> p.ProductID == productID);  
+            
+            if (productOrder== null)
             {
+                productOrder = new ProductOrder()
+                {
                 Description = product.Description,
                 Price = product.Price,
                 ProductID = product.ProductID,
                 Quantity = float.Parse(Request["Quantity"])
-            };
+                };
 
-            orderView.Products.Add(productOrder);
-
+                orderView.Products.Add(productOrder);
+            } else
+            {
+                productOrder.Quantity += float.Parse(Request["Quantity"]);
+            }
+           
             var listC = db.Customers.ToList();
 
             listC.Add(new Customer { CustomerID = 0, FirstName = "[You must select a customer]" });
