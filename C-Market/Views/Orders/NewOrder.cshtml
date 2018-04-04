@@ -8,9 +8,10 @@
 }
 
 <h2>NewOrder</h2>
+<h3>@ViewBag.Error</h3>
+<h3>@ViewBag.Message</h3>
 
-
-@using (Html.BeginForm())
+@using (Html.BeginForm("NewOrder", "Orders", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -26,7 +27,7 @@
 
     @Html.ActionLink("Add Product", "AddProduct", new { }, new {@class="btn btn-primary"}) 
    
-    <input type="submit" value="Save Order" id="NewOrder" class="btn btn-default" />
+    <input type="submit" value="Save Order" id="NewOrder" class="btn btn-success"/>
     
 </div>
 }
