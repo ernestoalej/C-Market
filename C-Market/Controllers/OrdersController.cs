@@ -16,7 +16,7 @@ namespace C_Market.Controllers
         {
             var orderView = new OrderView();
             orderView.Customer = new Customer();
-            orderView.Products = new List<ProductOrder>();
+            orderView.Products = new List<ProductOrder>();        
 
             Session["orderView"] = orderView;
 
@@ -24,8 +24,8 @@ namespace C_Market.Controllers
 
             list.Add(new Customer { CustomerID = 0, FirstName = "[You must select a customer]" });
             list = list.OrderBy(c => c.FullName).ToList();
-            ViewBag.CustomerID = new SelectList(list, "CustomerID", "FullName");
-            
+            ViewBag.CustomerID = new SelectList(list, "CustomerID", "FullName");          
+
             return View(orderView);
         }
 
@@ -35,6 +35,7 @@ namespace C_Market.Controllers
             orderView = Session["orderView"] as OrderView;
 
             var customerID =  int.Parse(Request["customerID"]);
+
 
             if (customerID == 0)
             {
@@ -48,9 +49,9 @@ namespace C_Market.Controllers
                 return View(orderView);
             }
 
-            var product = db.Products.Find(customerID);
+            Customer customer = db.Customers.Find(customerID);
 
-            if (product == null)
+            if (customer == null)
             {
                 var list = db.Customers.ToList();
 
@@ -130,7 +131,7 @@ namespace C_Market.Controllers
             list.Add(new ProductOrder { ProductID = 0, Description = "[You must select a product]" });
             list = list.OrderBy(p => p.Description).ToList();              
             ViewBag.ProductID = new SelectList(list, "ProductID", "Description");
-                   
+                               
             return View();
         }
 
@@ -139,8 +140,11 @@ namespace C_Market.Controllers
         {
             var orderView = Session["orderView"] as OrderView;
 
+           
+
             var productID = int.Parse(Request["ProductID"] );
 
+     
             if (productID == 0)
             {
                 var list = db.Products.ToList();
@@ -166,6 +170,7 @@ namespace C_Market.Controllers
                 ViewBag.Error = "Product not found";
 
             }
+           
 
             productOrder = orderView.Products.Find( p=> p.ProductID == productID);  
             
@@ -186,9 +191,10 @@ namespace C_Market.Controllers
             }
            
             var listC = db.Customers.ToList();
+            listC = listC.OrderBy(c => c.FullName).ToList();
 
             listC.Add(new Customer { CustomerID = 0, FirstName = "[You must select a customer]" });
-            listC = listC.OrderBy(c => c.FullName).ToList();
+            
             ViewBag.CustomerID = new SelectList(listC, "CustomerID", "FullName");
 
             return View("NewOrder", orderView);
@@ -204,3 +210,4 @@ namespace C_Market.Controllers
         }
     }
 }
+ 
