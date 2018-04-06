@@ -36,7 +36,6 @@ namespace C_Market.Controllers
 
             var customerID =  int.Parse(Request["customerID"]);
 
-
             if (customerID == 0)
             {
                 var list = db.Customers.ToList();
@@ -75,35 +74,53 @@ namespace C_Market.Controllers
                 return View(orderView);
             }
 
-            var order = new Order
+            int orderID = 0;
+
+            using (var  transaction  =  db.Database.BeginTransaction())
             {
-                CustomerID = customerID,
-                DateOrder = DateTime.Now,
-                OrderStatus = OrderStatus.Created
-               
-            };
-
-            db.Orders.Add(order);
-            db.SaveChanges();
-
-            var orderID = db.Orders.ToList().Select(o=> o.OrderID).Max();
-
-            foreach (var item in orderView.Products)
-            {
-                var orderDetail = new OrderDetail
+                try
                 {
-                    ProductID = item.ProductID,
-                    Description = item.Description,
-                    Quantity = item.Quantity,
-                    Price = item.Price,
-                    OrderID = orderID
-                };
+                    var order = new Order
+                    {
+                        CustomerID = customerID,
+                        DateOrder = DateTime.Now,
+                        OrderStatus = OrderStatus.Created
 
-                db.OrderDetails.Add(orderDetail);
+                    };
 
+                    db.Orders.Add(order);
+                    db.SaveChanges();
+
+                    orderID = db.Orders.ToList().Select(o => o.OrderID).Max();
+
+                    foreach (var item in orderView.Products)
+                    {
+                        var orderDetail = new OrderDetail
+                        {
+                            ProductID = item.ProductID,
+                            Description = item.Description,
+                            Quantity = item.Quantity,
+                            Price = item.Price,
+                            OrderID = orderID
+                        };
+
+                        db.OrderDetails.Add(orderDetail);
+
+                    }
+
+                    db.SaveChanges();
+
+                    transaction.Commit();
+                }
+                catch (Exception e)
+                {
+                    transaction.Rollback();
+                    ViewBag.Error = "An error has ocurred creating a new order : " + e.Message;
+
+                    return View(orderView);
+                }
+           
             }
-
-            db.SaveChanges();
 
             ViewBag.Message = string.Format("Order {0}, saved successfully!", orderID);
 
