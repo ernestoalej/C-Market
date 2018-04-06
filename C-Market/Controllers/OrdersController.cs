@@ -76,6 +76,8 @@ namespace C_Market.Controllers
 
             int orderID = 0;
 
+            int i = 0;
+             
             using (var  transaction  =  db.Database.BeginTransaction())
             {
                 try
@@ -106,9 +108,21 @@ namespace C_Market.Controllers
 
                         db.OrderDetails.Add(orderDetail);
 
+                        // Generar un errror para poder probar la transacción
+                        i++;
+
+                        if (i >1)
+                        {
+                            int a = 0;
+                            i /= a;
+                        }
+
+
                     }
 
                     db.SaveChanges();
+
+               
 
                     transaction.Commit();
                 }
@@ -116,6 +130,11 @@ namespace C_Market.Controllers
                 {
                     transaction.Rollback();
                     ViewBag.Error = "An error has ocurred creating a new order : " + e.Message;
+
+                    var listCus = db.Customers.ToList();
+                    listCus.Add(new Customer { CustomerID = 0, FirstName = "[Select a customer]" });
+                    listCus = listCus.OrderBy(c => c.FullName).ToList();
+                    ViewBag.CustomerID = new SelectList(listCus, "CustomerID", "FullName");
 
                     return View(orderView);
                 }
@@ -130,7 +149,6 @@ namespace C_Market.Controllers
 
 
             var listC = db.Customers.ToList();
-
             listC.Add(new Customer { CustomerID = 0, FirstName = "[Select a customer]" });
             listC = listC.OrderBy(c => c.FullName).ToList();
             ViewBag.CustomerID = new SelectList(listC, "CustomerID", "FullName");
