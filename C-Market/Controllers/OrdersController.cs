@@ -76,7 +76,7 @@ namespace C_Market.Controllers
 
             int orderID = 0;
 
-            int i = 0;
+           // int i = 0;
              
             using (var  transaction  =  db.Database.BeginTransaction())
             {
@@ -108,14 +108,14 @@ namespace C_Market.Controllers
 
                         db.OrderDetails.Add(orderDetail);
 
-                        // Generar un errror para poder probar la transacción
+                        /* Generar un errror para poder probar la transacción
                         i++;
 
                         if (i >1)
                         {
                             int a = 0;
                             i /= a;
-                        }
+                        }*/
 
 
                     }
