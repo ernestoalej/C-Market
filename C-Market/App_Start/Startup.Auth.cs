@@ -54,9 +54,9 @@ namespace C_Market
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "589490371388394",
+               appSecret: "9a60d48cf88c83b4e889a94ca6bb7150");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
