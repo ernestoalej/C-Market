@@ -1,4 +1,5 @@
-﻿using System;
+﻿using C_Market.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace C_Market
             Database.SetInitializer(
                 new MigrateDatabaseToLatestVersion<Models.C_MarketContext,
                     Migrations.Configuration>());
+            
 
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);

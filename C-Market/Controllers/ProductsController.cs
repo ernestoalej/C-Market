@@ -10,17 +10,21 @@ using C_Market.Models;
 
 namespace C_Market.Controllers
 {
+    [Authorize (Users ="ernestocontreras28@gmail.com")]
     public class ProductsController : Controller
     {
+        
         private C_MarketContext db = new C_MarketContext();
 
         // GET: Products
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View(db.Products.ToList());
         }
 
         // GET: Products/Details/5
+        [AllowAnonymous]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -36,6 +40,7 @@ namespace C_Market.Controllers
         }
 
         // GET: Products/Create
+        
         public ActionResult Create()
         {
             return View();
