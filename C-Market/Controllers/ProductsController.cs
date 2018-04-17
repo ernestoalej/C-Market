@@ -12,8 +12,7 @@ namespace C_Market.Controllers
 {
     [Authorize (Users ="ernestocontreras28@gmail.com")]
     public class ProductsController : Controller
-    {
-        
+    {        
         private C_MarketContext db = new C_MarketContext();
 
         // GET: Products
