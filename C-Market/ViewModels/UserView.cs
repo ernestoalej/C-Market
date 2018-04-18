@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace C_Market.Models
+namespace C_Market.ViewModels
 {
     public class UserView
     {
@@ -16,7 +16,7 @@ namespace C_Market.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        public RoleView Role { get; set; }
+       // public RoleView Role { get; set; }
 
         public List<RoleView> Roles { get; set; }
     }

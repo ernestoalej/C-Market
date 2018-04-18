@@ -1,0 +1,27 @@
+﻿
+@model C_Market.ViewModels.UserView
+
+@{
+    ViewBag.Title = "Roles";
+}
+
+<h2>Roles for user: @Model.Name</h2>
+<p>
+    @Html.ActionLink("Add Rol", "AddRole", new { user = Model} )
+</p>
+
+<table class="table">   
+    @for(int i =0; i < Model.Roles.Count; i++)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => Model.Roles[i].Name)
+            </td>
+          
+            <td>             
+                @Html.ActionLink("Delete", "Delete", new { user = Model, id = Model.Roles[i].RoleID })
+            </td>
+        </tr>
+    }
+</table>
+
