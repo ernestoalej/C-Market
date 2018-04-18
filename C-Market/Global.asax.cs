@@ -28,6 +28,8 @@ namespace C_Market
             ApplicationDbContext db = new ApplicationDbContext();
             CreateRoles(db);
             CreateSuperUser(db);
+            AddPermissionsTuSuperUser(db);
+            db.Dispose();
 
             db.Dispose();   // Libearamos el objetos y cerramos la conexion.*/
 
@@ -36,6 +38,36 @@ namespace C_Market
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);         
+        }
+
+        private void AddPermissionsTuSuperUser(ApplicationDbContext db)
+        {
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+
+            var user = userManager.FindByName("ernestocontreras28@gmail.com");
+
+            if (!userManager.IsInRole(user.Id, "View"))
+            {
+                userManager.AddToRole(user.Id, "View");
+            }
+
+            if (!userManager.IsInRole(user.Id, "Create"))
+            {
+                userManager.AddToRole(user.Id, "Create");
+            }
+
+            if (!userManager.IsInRole(user.Id, "Edit"))
+            {
+                userManager.AddToRole(user.Id, "Edit");
+            }
+
+            if (!userManager.IsInRole(user.Id, "Delete"))
+            {
+                userManager.AddToRole(user.Id, "Delete");
+            }
+
+         
         }
 
         private void CreateSuperUser(ApplicationDbContext db)
