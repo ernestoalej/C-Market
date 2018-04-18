@@ -26,7 +26,9 @@ namespace C_Market
 
             // Conectar con la Base de datos
             ApplicationDbContext db = new ApplicationDbContext();
-             CreateRoles(db);
+            CreateRoles(db);
+            CreateSuperUser(db);
+
             db.Dispose();   // Libearamos el objetos y cerramos la conexion.*/
 
             AreaRegistration.RegisterAllAreas();
@@ -36,12 +38,47 @@ namespace C_Market
             BundleConfig.RegisterBundles(BundleTable.Bundles);         
         }
 
+        private void CreateSuperUser(ApplicationDbContext db)
+        {
+            //Crea un usuario por código
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+
+            var user = userManager.FindByName("ernestocontreras28@gmail.com");
+
+            if (user == null) 
+            {
+                user = new ApplicationUser
+                {
+                   UserName = "ernestocontreras28@gmail.com",
+                    Email = "ernestocontreras28@gmail.com",       
+                };
+
+                userManager.Create(user, "Ernxls(GM)");
+
+            }
+
+            user = userManager.FindByName("crsoftware@hotmail.com");
+
+            if (user == null)
+            {
+   
+                user = new ApplicationUser
+                {
+                    UserName = "crsoftware@hotmail.com",
+                    Email = "crsoftware@hotmail.com"
+                };
+
+               
+                userManager.Create(user, "Ernxls(CE)");
+            }
+        }
+
         private void CreateRoles(ApplicationDbContext db)
         {
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
 
             // Si no existe el rol ver, crearlo
-            if (!roleManager.RoleExists("View")){
+           if (!roleManager.RoleExists("View")){
                 roleManager.Create(new IdentityRole("View"));
             }
 
