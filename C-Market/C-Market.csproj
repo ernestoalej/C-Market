@@ -200,7 +200,10 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Models\ProductOrder.cs" />
+    <Compile Include="ViewModels\RoleView.cs" />
+    <Compile Include="ViewModels\UserView.cs" />
     <Compile Include="ViewModels\AccountController.cs" />
     <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DocumentTypesController.cs" />
@@ -316,6 +319,7 @@
     <Content Include="Views\Customers\Delete.cshtml" />
     <Content Include="Views\Orders\NewOrder.cshtml" />
     <Content Include="Views\Orders\AddProduct.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

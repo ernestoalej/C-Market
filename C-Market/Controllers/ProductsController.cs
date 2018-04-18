@@ -10,20 +10,22 @@ using C_Market.Models;
 
 namespace C_Market.Controllers
 {
-    [Authorize (Users ="ernestocontreras28@gmail.com")]
+   // [Authorize (Users ="ernestocontreras28@gmail.com")]
     public class ProductsController : Controller
     {        
         private C_MarketContext db = new C_MarketContext();
 
         // GET: Products
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles ="View")]  // Autorizar a quien tenga el rol de View-
         public ActionResult Index()
         {
             return View(db.Products.ToList());
         }
 
         // GET: Products/Details/5
-        [AllowAnonymous]
+        //[AllowAnonymous]
+        [Authorize(Roles = "View")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -39,7 +41,7 @@ namespace C_Market.Controllers
         }
 
         // GET: Products/Create
-        
+        [Authorize(Roles = "Create")]
         public ActionResult Create()
         {
             return View();
@@ -63,6 +65,7 @@ namespace C_Market.Controllers
         }
 
         // GET: Products/Edit/5
+        [Authorize(Roles = "Edit")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -94,6 +97,7 @@ namespace C_Market.Controllers
         }
 
         // GET: Products/Delete/5
+        [Authorize(Roles = "Delete")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
