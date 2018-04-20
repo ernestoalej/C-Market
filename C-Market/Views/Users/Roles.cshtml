@@ -7,7 +7,9 @@
 
 <h2>Roles for user: @Model.Name</h2>
 <p>
-    @Html.ActionLink("Add Rol", "AddRole", new { user = Model} )
+    @Html.ActionLink("Add Rol", "AddRole", new { userID = Model.UserID}, new {@class = "btn btn-primary"} )
+
+    @Html.ActionLink("Back to list", "Index", new { }, new { @class= "btn btn-info"})
 </p>
 
 <table class="table">   

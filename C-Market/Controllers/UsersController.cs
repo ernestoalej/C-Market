@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -39,8 +40,13 @@ namespace C_Market.Controllers
             return View(usersView);
         }
 
-        public ActionResult Roles(String userID)
+        public ActionResult Roles(string userID)
         {
+            if (string.IsNullOrEmpty(userID))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
 
@@ -67,6 +73,32 @@ namespace C_Market.Controllers
                 Name = user.UserName,
                 UserID = user.Id,
                 Roles =  rolesView
+            };
+
+            return View(userView);
+        }
+
+        public ActionResult AddRole(string userID)
+        {
+            if (string.IsNullOrEmpty(userID))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));        
+            var users = userManager.Users.ToList();
+            var user = users.Find(u => u.Id == (userID));
+            
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+
+            var userView = new UserView
+            {
+                Email = user.Email,
+                Name = user.UserName,
+                UserID = user.Id
             };
 
             return View(userView);
