@@ -78,6 +78,13 @@ namespace C_Market.Controllers
             return View(userView);
         }
 
+        [HttpPost]
+        public ActionResult AddRole(string userID, FormCollection form)
+        {
+
+        }
+
+        [HttpGet]
         public ActionResult AddRole(string userID)
         {
             if (string.IsNullOrEmpty(userID))
@@ -100,6 +107,16 @@ namespace C_Market.Controllers
                 Name = user.UserName,
                 UserID = user.Id
             };
+
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+
+            var list = roleManager.Roles.ToList();
+
+            list.Add(new IdentityRole { Id = "", Name = "[Select a role]" });
+            
+            list = list.OrderBy(r => r.Name).ToList();
+            ViewBag.RoleID = new SelectList(list, "Id", "Name");
+
 
             return View(userView);
         }
