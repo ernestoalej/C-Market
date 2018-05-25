@@ -7,7 +7,7 @@
 
 <h2>Add Role to user: @Model.Name</h2>
 
-@using (Html.BeginForm("AddRole", "Users", FormMethod.Post))
+@using (Html.BeginForm("AddRole", "Users", new { userID = Model.UserID }, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
