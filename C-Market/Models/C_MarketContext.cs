@@ -34,5 +34,6 @@ namespace C_Market.Models
 
         public System.Data.Entity.DbSet<C_Market.Models.OrderDetail> OrderDetails { get; set; }
 
+        public System.Data.Entity.DbSet<C_Market.Models.Category> Categories { get; set; }
     }
 }
