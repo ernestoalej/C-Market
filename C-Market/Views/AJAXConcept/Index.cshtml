@@ -13,8 +13,7 @@
     <div id="lblMessage"></div>
 }
 
-@section Scripts{
-    
+@section Scripts{    
     <script type="text/javascript">
         $(function () {
             $("#btnCalculate").on("click", function () {
@@ -25,21 +24,19 @@
                     data: { n: $('#txtN').val() },
                     datatype: 'json',
                     cache: false
+                })
+                .success(function (data) {
+                    $('#lblMessage').html(data.Factorial);
+                })
+                .error(function (xhr, ajaxOptionss, thrownError) {
+                    $('#lblMessage').html("An error has occurred");    
                 });
-
                 return false;
-            })
-
-            .success(function (data) {
-                $("lblMensaje").html(data.Factorial);
-            })
-                .error(function (xhr, ajaxOptions, thrownError) {
-                $("lblMensaje").html("An erro was occured");
             });
 
-            return false;
-        });
-
+           
+        }); // cierra funcion principal.  
+    
     </script>
     
-    }
+}
