@@ -11,7 +11,7 @@ namespace C_Market.Models
         [Key]
         public int CategoryID { get; set; }
 
-        [StringLength(30, ErrorMessage = "The field {0} must contain between {2} and {1} characteres", MinimumLength = 5)]
+        [StringLength(30, ErrorMessage = "The field {0} must contain between {2} and {1} characteres", MinimumLength = 3)]
         [Display(Name = "Document")]
         public string Description { get; set; }
     }

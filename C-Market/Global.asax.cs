@@ -106,7 +106,7 @@ namespace C_Market
         }
 
         private void CreateRoles(ApplicationDbContext db)
-        {
+        { 
             var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
 
             // Si no existe el rol ver, crearlo
