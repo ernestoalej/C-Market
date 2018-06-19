@@ -8,14 +8,14 @@
 @using (Html.BeginForm())
 {
     <button id="btnGetCategories">Get Categories</button>
-    <button id="btnGetCategories">Get Category</button>
+    <button id="btnGetCategory">Get Category</button>
     <button id="btnAddCategory">Add Category</button>
     <button id="btnUpdateCategory">Update Category</button>
     <button id="btnDeleteCategory">Delete Category</button>
     <br /><br />
 
-    <input  name="Text" type="Text" placeholder="Category ID" />
-    <input name="txtDescripcion" type="Text" placeholder="Category Description" />
+    <input id="txtCategoryID" type="Text" placeholder="Category ID" />
+    <input id="txtDescripcion" type="Text" placeholder="Category Description" />
 
     <br /><br />
 
@@ -29,7 +29,6 @@
         $(function () {
 
             $('#btnGetCategories').on("click", function () {
-
                 $.ajax({
                     type: 'GET',
                     url: '/api/CategoriesAPI',
@@ -54,7 +53,166 @@
                 });
 
                 return false;
+            });
 
+            $('#btnGetCategory').on("click", function () {
+
+                var categoryID = $('#txtCategoryID').val();
+
+                if (categoryID == "") {
+                    $('#lblMessage').html('You must enter a Category ID');
+
+                    return false;
+                }
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/CategoriesAPI/' + categoryID,
+                    datatype: 'json',
+                    cache: false,
+                })
+                .success(function (data) {
+                    if (data != null) {
+                        var outPut = '';
+
+                        outPut += '<hr/><br/>';
+                        outPut += '<b>Category ID:</b>' + data.CategoryID + '<br/>';
+                        outPut += '<b>Description:</b>' + data.Description + '<br/>';
+
+                        $('#lblMessage').html(outPut);
+                    } else {
+                        $('#lblMessage').html('No records found');
+                    }
+
+                })
+                .error(function (hxr, ajaxOptions, thrownError) {
+                    $('#lblMessage').html('An error has accurred trying to load the categories');
+                });
+
+
+                return false;
+            });
+
+
+            $('#btnAddCategory').on("click", function () {
+
+                var descripcion = $('#txtDescripcion').val();
+
+                if (descripcion == "") {
+                    $('#lblMessage').html('You must enter a description');
+
+                    return false;
+                }
+
+                var category = { Description: descripcion };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/CategoriesAPI',
+                    data: category,
+                    datatype: 'json',
+                    cache: false,
+                })
+                .success(function (data) {
+
+                    var outPut = '';
+                    outPut += '<hr/><br/>';
+                    outPut = '<h3>Record added</h3>';
+                    outPut += '<b>Category ID:</b>' + data.CategoryID + '<br/>';
+                    outPut += '<b>Description:</b>' + data.Description + '<br/>';
+
+                    $('#lblMessage').html(outPut);
+                 
+                })
+                .error(function (hxr, ajaxOptions, thrownError) {
+                    $('#lblMessage').html('An error has accurred trying to load the categories');
+                });
+
+
+                return false;
+            });
+
+            $('#btnUpdateCategory').on("click", function () {
+
+                var categoryID = $('#txtCategoryID').val();
+
+                if (categoryID == "") {
+                    $('#lblMessage').html('You must enter a Category ID');
+                         
+                    return false;
+                }
+
+                var descripcion = $('#txtDescripcion').val();
+
+                if (descripcion == "") {
+                    $('#lblMessage').html('You must enter a description');
+
+                    return false;
+                }
+               
+                var category = { CategoryID: categoryID, Description: descripcion};
+
+                $.ajax({
+                    type: 'PUT',
+                    url: '/api/CategoriesAPI/' + categoryID,
+                    data: category,
+                    datatype: 'json',
+                    cache: false,
+                })
+                .success(function (data) {
+
+                    var outPut = '';
+                    outPut += '<hr/><br/>';
+                    outPut = '<h3>The record was modified</h3>';
+                    
+                    $('#lblMessage').html(outPut);
+
+                })
+                .error(function (hxr, ajaxOptions, thrownError) {
+                    $('#lblMessage').html('An error has accurred trying to load the categories');
+                });
+
+
+                return false;
+            });
+
+            $('#btnDeleteCategory').on("click", function () {
+
+                var categoryID = $('#txtCategoryID').val();
+
+                if (categoryID == "") {
+                    $('#lblMessage').html('You must enter a Category ID');
+
+                    return false;
+                }
+
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/api/CategoriesAPI/' + categoryID,
+                    datatype: 'json',
+                    cache: false,
+                })
+                    .success(function (data) {
+                        if (data != null) {
+                            var outPut = '';
+
+                            outPut += '<hr/><br/>';
+                            outPut += '<h3>Record deleted</h3>';
+                            outPut += '<b>Category ID:</b>' + data.CategoryID + '<br/>';
+                            outPut += '<b>Description:</b>' + data.Description + '<br/>';
+
+                            $('#lblMessage').html(outPut);
+                        } else {
+                            $('#lblMessage').html('No records found');
+                        }
+
+                    })
+                    .error(function (hxr, ajaxOptions, thrownError) {
+                        $('#lblMessage').html('An error has accurred trying to load the categories');
+                    });
+
+
+                return false;
             });
         });
 
@@ -66,14 +224,13 @@
             $('#loading').hide();
         });
 
-
     </script>    
 }
 
 <style type="text/css">
     #loading {
         display: none;
-        background-color: gray;
+        background-color: lightblue;
         z-index: 999999;
         position: absolute;
         left: 0;

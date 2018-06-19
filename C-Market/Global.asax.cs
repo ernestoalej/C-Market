@@ -29,7 +29,7 @@ namespace C_Market
             CreateRoles(db);
             CreateSuperUser(db);
             AddPermissionsTuSuperUser(db);
-            db.Dispose();
+           // db.Dispose();
 
             db.Dispose();   // Libearamos el objetos y cerramos la conexion.*/
 
@@ -85,7 +85,7 @@ namespace C_Market
                     Email = "ernestocontreras28@gmail.com",       
                 };
 
-                userManager.Create(user, "Ernxls(GM)");
+                userManager.Create(user, "Ernxls(G28)");
 
             }
 
